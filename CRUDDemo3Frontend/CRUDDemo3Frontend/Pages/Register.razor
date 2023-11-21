@@ -1,0 +1,56 @@
+﻿@page "/Register"
+@using CRUDDemo3Frontend.Model
+@using CRUDDemo3Frontend.Service;
+@inject IUserService userService;
+@inject NavigationManager NavigationManager
+
+<PageTitle>Register</PageTitle>
+
+<h1>Register</h1>
+
+<EditForm Model="@user" OnValidSubmit="SaveUser">
+    <DataAnnotationsValidator/>
+
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="user.FullName" />
+        </div>
+        <ValidationMessage For="@(() => user.FullName)" />
+    </div>
+    <div class="mb=3">
+        <label class="form-label">Email Address</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="user.EmailAddress" />
+        </div>
+        <ValidationMessage For="@(()=> user.EmailAddress)" />
+    </div>
+    <div class="mb=3">
+        <label class="form-label">UserID</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="user.UserID" />
+        </div>
+        <ValidationMessage For="@(()=> user.UserID)" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="user.Password" />
+        </div>
+        <ValidationMessage For="@(() => user.Password)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</EditForm>
+
+
+@code {
+    protected User user = new User();
+
+    protected async Task SaveUser()
+    {
+        await userService.AddUser(user);
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -1,0 +1,58 @@
+﻿@page "/DeleteUser/{Id:int}"
+@inject NavigationManager NavigationManager
+@using CRUDDemo3Frontend.Model
+@using CRUDDemo3Frontend.Service;
+@inject IUserService userService;
+
+<h3>DeleteUser</h3>
+<br />
+<div class="form-group">
+    <h4>Do you want to delete this user?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>UserID</td>
+                <td>@user.UserID</td>
+            </tr>
+            <tr>
+                <td>Full Name</td>
+                <td>@user.FullName</td>
+            </tr>
+            <tr>
+                <td>Email Address</td>
+                <td>@user.EmailAddress</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveUser(user.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    User user = new User();
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var user1 = (await AuthStat).User;
+        if (!user1.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/Login");
+        }
+        user = await userService.GetUser(Convert.ToInt32(Id));
+    }
+    protected async Task RemoveUser(int Id)
+    {
+        await userService.DeleteUser(Convert.ToInt32(Id));
+        NavigationManager.NavigateTo("/");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

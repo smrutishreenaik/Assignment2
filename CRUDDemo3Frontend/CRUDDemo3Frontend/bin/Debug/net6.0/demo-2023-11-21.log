@@ -1,0 +1,6 @@
+2023-11-21 18:41:39.0344||WARN|CRUDDemo3Frontend.Service.UserService|User visited Index page 
+2023-11-21 18:41:40.7426||WARN|CRUDDemo3Frontend.Service.UserService|User visited Index page 
+2023-11-21 18:41:43.0888||WARN|CRUDDemo3Frontend.Service.UserService|User visited details page 
+2023-11-21 18:41:45.4158||WARN|CRUDDemo3Frontend.Areas.Identity.Pages.Areas_Identity_Pages_Account_LogOut|User successfully logged out 
+2023-11-21 18:41:45.4355||WARN|CRUDDemo3Frontend.Service.UserService|User visited Index page 
+2023-11-21 18:41:45.8177||WARN|CRUDDemo3Frontend.Service.UserService|User visited Index page 

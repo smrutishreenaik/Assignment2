@@ -1,0 +1,58 @@
+﻿@page "/"
+@using CRUDDemo3Frontend.Model;
+@using CRUDDemo3Frontend.Service;
+@using MudBlazor
+@inject IUserService userService;
+<PageTitle>Index</PageTitle>
+
+
+<h4>Welcome to your new app.</h4>
+
+<AuthorizeView>
+    <Authorized>
+        <h1>User List</h1>
+
+        <MudTable Items="@userList" Hover="true" Context="childContext" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+            <HeaderContent>
+                <MudTh>UserID</MudTh>
+                <MudTh>Full Name</MudTh>
+                <MudTh>Email Address</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="UserID">@childContext.UserID</MudTd>
+                <MudTd DataLabel="Full Name">@childContext.FullName</MudTd>
+                <MudTd DataLabel="Email Address">@childContext.EmailAddress</MudTd>
+                <MudTd>
+                    <a href='/EditUser/@childContext.Id' class="btn btn-outline-dark" role="button">
+                        Edit
+                    </a>
+                </MudTd>
+                <MudTd>
+                    <a href='/DeleteUser/@childContext.Id' class="btn btn-outline-danger" role="button">
+                        Delete
+                    </a>
+                </MudTd>
+            </RowTemplate>
+
+        </MudTable>
+
+</Authorized>
+    <NotAuthorized>
+        <h5>You are not authorized to acces the user list</h5>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code{
+    private List<User> userList = new List<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUsers();
+    }
+
+    private async Task GetUsers()
+    {
+        userList = await userService.GetUsers();
+    }
+}
