@@ -1,0 +1,1 @@
+Rename database as "Training" to run the project correctly
